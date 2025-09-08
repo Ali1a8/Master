@@ -295,7 +295,7 @@ def is_user_subscribed(user_id):
 
 def subscription_markup():
     markup = types.InlineKeyboardMarkup()
-    btn = types.InlineKeyboardButton("📢 اشترك في القناة", url=f"https://t.me/MasterSyria1")
+    btn = types.InlineKeyboardButton("📢 اشترك في القناة", url=https://t.me/MasterSyria1")
     markup.add(btn)
     markup.add(types.InlineKeyboardButton("✅ تأكيد الاشتراك", callback_data="check_sub"))
     return markup
@@ -2996,7 +2996,7 @@ def keep_alive():
             mem_usage = memory_usage()
             if mem_usage > 400:
                 bot.send_message(ADMIN_ID, f"🚨 ذاكرة خطيرة: {mem_usage:.1f}MB")
-            requests.get('https://master-zd0v.onrender.com/')
+            requests.get('https://master-rzt9.onrender.com/')
         except:
             pass
         time.sleep(300)
@@ -3019,6 +3019,6 @@ def index():
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 10000))
     bot.remove_webhook()
-    bot.set_webhook(url='https://master-zd0v.onrender.com/' + TOKEN)
+    bot.set_webhook(url='https://master-rzt9.onrender.com/' + TOKEN)
     threading.Thread(target=keep_alive, daemon=True).start()
     app.run(host='0.0.0.0', port=PORT)
