@@ -295,7 +295,7 @@ def is_user_subscribed(user_id):
 
 def subscription_markup():
     markup = types.InlineKeyboardMarkup()
-    btn = types.InlineKeyboardButton("📢 اشترك في القناة", url=https://t.me/MasterSyria1")
+    btn = types.InlineKeyboardButton("📢 اشترك في القناة", url="https://t.me/MasterSyria1")
     markup.add(btn)
     markup.add(types.InlineKeyboardButton("✅ تأكيد الاشتراك", callback_data="check_sub"))
     return markup
