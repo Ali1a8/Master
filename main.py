@@ -498,7 +498,7 @@ def main_markup(user_id):
     ]
     markup.add(*buttons)
     return markup
-f admin_markup():
+def admin_markup():
     markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     markup.add(
         types.KeyboardButton('👥 عدد المستخدمين'),
