@@ -46,7 +46,7 @@ def init_db_pool():
             host=DB_HOST,
             port=DB_PORT,
             database=DB_NAME,
-            sslmode='disable',
+            sslmode='require',
             connect_timeout=5,
             keepalives=1,
             keepalives_idle=30,
