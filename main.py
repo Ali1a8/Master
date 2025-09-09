@@ -76,10 +76,11 @@ def get_db_connection():
             if conn.closed:
                 conn = psycopg2.connect(
                     user=DB_USER,
-                    password=DB_PASSWORD,
-                    host=DB_HOST,
-                    port=DB_PORT,
-                    database=DB_NAME
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT,
+            database=DB_NAME,
+            sslmode='require',
                 )
             return conn
         except OperationalError:
