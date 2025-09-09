@@ -46,7 +46,7 @@ def init_db_pool():
             host=DB_HOST,
             port=DB_PORT,
             database=DB_NAME,
-            sslmode='require',
+            sslmode='disable',
             connect_timeout=5,
             keepalives=1,
             keepalives_idle=30,
@@ -114,34 +114,7 @@ def with_db_cursor(func):
                 postgreSQL_pool.putconn(conn)
     return wrapper
 
-@with_db_cursor
-def get_setting(cursor, key):
-    try:
-        cursor.execute("SELECT value FROM settings WHERE key = %s", (key,))
-        result = cursor.fetchone()
-        if result:
-            return result[0]
-        return None
-    except Exception as e:
-        error_logger.exception(f"خطأ في الحصول على الإعداد: {key}")
-        return None
-
-@with_db_connection
-def update_setting(conn, key, value):
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute("""
-                INSERT INTO settings (key, value) 
-                VALUES (%s, %s)
-                ON CONFLICT (key) DO UPDATE 
-                SET value = EXCLUDED.value
-            """, (key, str(value)))
-        conn.commit()
-    except Exception as e:
-        error_logger.exception(f"خطأ في تحديث الإعداد: {key}")
-
-@with_db_cursor
-def init_db_tables(cursor):
+def init_db_tables_with_cursor(cursor):
     try:
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS tickets (
@@ -233,6 +206,10 @@ def init_db_tables(cursor):
     except Exception as e:
         error_logger.exception("خطأ في إنشاء الجداول")
 
+@with_db_cursor
+def init_db_tables(cursor):
+    init_db_tables_with_cursor(cursor)
+
 init_db_tables()
 
 @with_db_connection
@@ -295,7 +272,7 @@ def is_user_subscribed(user_id):
 
 def subscription_markup():
     markup = types.InlineKeyboardMarkup()
-    btn = types.InlineKeyboardButton("📢 اشترك في القناة", url="https://t.me/MasterSyria1")
+    btn = types.InlineKeyboardButton("📢 اشترك في القناة", url=f"https://t.me/MasterSyria1")
     markup.add(btn)
     markup.add(types.InlineKeyboardButton("✅ تأكيد الاشتراك", callback_data="check_sub"))
     return markup
@@ -521,8 +498,7 @@ def main_markup(user_id):
     ]
     markup.add(*buttons)
     return markup
-
-def admin_markup():
+f admin_markup():
     markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     markup.add(
         types.KeyboardButton('👥 عدد المستخدمين'),
