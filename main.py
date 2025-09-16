@@ -905,7 +905,7 @@ scheduler.add_job(monthly_draw_job, 'cron', day=1, hour=12, minute=0)
 scheduler.add_job(clean_old_data, 'interval', days=1)
 
 
-@bot.message_handler(commands=['start'])
+@telebot.message_handler(commands=['start'])
 def start(message):
     try:
         if not check_rate_limit(message.from_user.id):
